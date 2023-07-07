@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -35,6 +37,18 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        // $name = $request->input('input_nama');
+
+        DB::table('users')->insert([
+            'name'       => $request->input('inp_name'),
+            'email'      => $request->input('inp_email'),
+            'password'   => bcrypt($request->input('inp_password')),
+            // 'photo'     => $request->input('inp_photo'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        return view('done');
     }
 
     /**
